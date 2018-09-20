@@ -1,0 +1,128 @@
+{
+  "ab": {
+    "interval": 21600,
+    "switch": 0
+  },
+  "ad": {
+    "env": {
+      "net": 0
+    },
+    "listen_apps": 1,
+    "switch": 1
+  },
+  "data": {
+    "conf_id": 1,
+    "switch": 1
+  },
+  "error": {
+    "env": {
+      "net": 0
+    },
+    "switch": 1
+  },
+  "event": {
+    "env": {
+      "net": 0
+    },
+    "interval": 30,
+    "lines": 200,
+    "oid_in": [],
+    "oid_out": [
+      "db2dcc8e32c4992429f3d8a829293fc3",
+      "d903e3d8ef3d3850276a415c88114ef6",
+      "97e8f14cdeb4cf6e958af62f2e52019c",
+      "a7d6d4391eea5e0e9cee6a13ee213c2c",
+      "e09f30b142a1eff2e8392c6c27efcd45",
+      "4c3302187384354e536a03a297f51e1a",
+      "80429f5a38597ac23fcc5ccd4f7f746f",
+      "d2258860bcb30509a9725ecd3cc4375a",
+      "8d746950b68bdae1c0a4101c2088c663",
+      "8684de3dbb86ee77439de127be412b58",
+      "8b81b513e69641b9e603e068758f5d1a",
+      "374488f6f1a5e9c27da1e91bc5292b76",
+      "641075978209fc320424270bb190af75",
+      "34fd61a1885ea3fb6e048248e26c2970",
+      "fae85d73c50e9e2ea61a6b4e17197f52",
+      "2eb6af447a946369750b36dc71d770ac",
+      "d692317ccdc54ab57d5a02e8441e8dbc",
+      "1c966b0de5fdc604d6f44826ea2d4b2f"
+    ],
+    "size_threshold": 204800,
+    "switch": 1
+  },
+  "feature": {
+    "kappi": {
+      "events": [],
+      "value": ""
+    },
+    "keyboard_emoji_ad": {
+      "events": [
+        "keyboard_emoji_ad,ad_click"
+      ],
+      "value": ""
+    },
+    "keyboard_menu_theme": {
+      "events": [
+        "plugin_tab,home"
+      ],
+      "value": ""
+    },
+    "kika_voice": {
+      "events": [
+        "system,stat",
+        "keyboard,voice"
+      ],
+      "value": ""
+    },
+    "list": "emoji_tab_ad,open_platform_auto_full_screen,kika_voice,kappi,navigation_browser,open_platform_no_apptable,keyboard_emoji_ad,open_platform_push_style1,keyboard_menu_theme,open_platform",
+    "navigation_browser": {
+      "events": [
+        "keyboard_inputview,create_time"
+      ],
+      "value": ""
+    },
+    "open_platform": {
+      "events": [
+        "keyboard_inputview,create_time"
+      ],
+      "value": ""
+    },
+    "open_platform_auto_full_screen": {
+      "events": [],
+      "value": ""
+    },
+    "open_platform_no_apptable": {
+      "events": [],
+      "value": ""
+    },
+    "open_platform_push_style1": {
+      "events": [],
+      "value": ""
+    }
+  },
+  "heartbeat": {
+    "interval": 21600,
+    "switch": 0
+  },
+  "meta": {
+    "env": {
+      "net": 0
+    },
+    "interval": 14400,
+    "switch": 1
+  },
+  "word": {
+    "content": [
+      "word",
+      "trace"
+    ],
+    "env": {
+      "net": 0
+    },
+    "interval": 20,
+    "lines": 1,
+    "mem_lines": 10,
+    "size_threshold": 204800,
+    "switch": 1
+  }
+}
