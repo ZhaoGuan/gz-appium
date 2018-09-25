@@ -43,5 +43,4 @@ def appium_linster():
 
 
 if __name__ == '__main__':
-    # write_duid('12312312')
     print(configer_reader(PATH + '/duid.yml'))

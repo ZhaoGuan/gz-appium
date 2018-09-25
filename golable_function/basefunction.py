@@ -78,64 +78,64 @@ class BaseFunction(object):
 
     # 等待元素超过多久报错,默认10S
     def wait_element(self, how, element, wait_time=10, fail_pic=True):
-        global wait_validate
-        global waite_element
-        global deadline
-        deadline = 0
+        # global wait_validate
+        # global wait_element
+        # global deadline
+        wait_element = None
+        dead_line = 0
         while True:
             try:
-                waite_element = self.check_find_element(how, element)
+                wait_element = self.check_find_element(how, element)
                 wait_validate = True
                 print('找到元素，不进行等待')
                 break
             except:
                 time.sleep(1)
-                deadline += 1
+                dead_line += 1
                 if deadline <= wait_time:
                     # print('等待',deadline,'秒')
                     continue
                 else:
                     # 如果找不到元素进行截图，截图是按照当时时间来命名
                     # 判断如果没有指定失败图片且，同文件夹的名字为Fail_picture的文件夹新建一个
-                    if fail_pic == True:
+                    if fail_pic:
                         self.fail_picture(int(wait_time))
                     wait_validate = False
                     break
         assert wait_validate is True, '超过设定等待时间未发现元素:' + element
         # 返回一个元素
-        return waite_element
+        return wait_element
 
     # 检查是否存在某元素
     def existence(self, how, element, wait=2, fail_pic=True):
-        global existence_result
-        global existence_event
+        # global existence_result
+        # global existence_event
         time.sleep(wait)
         try:
-            existence_event = self.check_find_element(how, element)
+            self.check_find_element(how, element)
             existence_result = True
-        # result = self.check_find_element(how, element).is_displayed()
         except:
-            if fail_pic == True:
+            if fail_pic:
                 self.fail_picture(0)
             existence_result = False
         return existence_result
 
     # 等待一类元素超过多久报错,默认5S
     def elements(self, how, element, element_time_waite=5, fail_pic=True):
-        global elements_validate
-        global elements_element
-        global deadline
+        # global elements_validate
+        # global elements_element
+        # global deadline
         deadline = 0
         while True:
             if how == 'id':
-                elements_element = self.driver.find_elements_by_id(element)
+                eles = self.driver.find_elements_by_id(element)
             elif how == 'name':
-                elements_element = self.driver.find_elements_by_xpath("//*[@text='%s' ]" % element)
+                eles = self.driver.find_elements_by_xpath("//*[@text='%s' ]" % element)
             elif how == 'class':
-                elements_element = self.driver.find_elements_by_class_name(element)
+                eles = self.driver.find_elements_by_class_name(element)
             elif how == 'xpath':
-                elements_element = self.driver.find_elements_by_xpath(element)
-            if len(elements_element) > 0:
+                eles = self.driver.find_elements_by_xpath(element)
+            if len(eles) > 0:
                 elements_validate = True
                 print('找到元素，不进行等待')
                 break
@@ -146,13 +146,13 @@ class BaseFunction(object):
                     # print('等待',deadline,'秒')
                     continue
                 else:
-                    if fail_pic == True:
+                    if fail_pic:
                         self.fail_picture(element_time_waite)
                     elements_validate = False
                     break
         assert elements_validate is True, '超过设定等待时间未发现元素:' + element
         # 返回一个元素
-        return elements_element
+        return eles
 
     # 元素检查和截图存放位置
     def click(self, how, element, fail_pic=True):
@@ -160,7 +160,8 @@ class BaseFunction(object):
         event_click.click()
 
     def click_jump(self, how1, element1, how2="0", element2="0", fail_pic=True):
-        global jump_validate
+        # global jump_validate
+        jump_validate = True
         # 点击元素1
         event1 = self.wait_element(how1, element1, fail_pic=fail_pic)
         event1.click()
@@ -178,10 +179,8 @@ class BaseFunction(object):
     # 通过元素本身是否变化进行判断元素是否被点击
     def click_change(self, how, element, click_type='change', fail_pic=True):
         # 元素检查和截图存放位置
-        global change_validate
+        # global change_validate
         # 截取元素点击前的图片
-        # self.wait_element(how, element)
-        # change_event = self.check_find_element(how, element)
         change_event = self.wait_element(how, element, fail_pic=fail_pic)
         click_before = 'click_before' + time.strftime('%Y%m%d%H%M%S')
         self.Extend.get_screenshot_by_element(change_event).write_to_file(PATH + '/../temp', click_before)
@@ -190,7 +189,7 @@ class BaseFunction(object):
         change_event.click()
         time.sleep(4)
         if click_type == 'change':
-            click_after = 'click_afte' + time.strftime('%Y%m%d%H%M%S')
+            click_after = 'click_after' + time.strftime('%Y%m%d%H%M%S')
             self.Extend.get_screenshot_by_element(change_event).write_to_file(PATH + '/../temp', click_after)
             result_same = self.Extend.get_screenshot_by_element(change_event).same_as(load, 0)
             if not result_same:
@@ -214,7 +213,7 @@ class BaseFunction(object):
 
     # 获取一个元素的name属性
     def attribute_name(self, how, element, same_thing='none', fail_pic=True):
-        global attribute_result
+        # global attribute_result
         attribute_event = self.wait_element(how, element, fail_pic=fail_pic)
         attribute_result = attribute_event.get_attribute('name')
         if same_thing == 'none':
@@ -249,7 +248,7 @@ class BaseFunction(object):
 
     # 根据元素滑动屏幕随机点击该元素（若元素高度小于200则按照200进行滑动），并根据第二个元素进行判断。若不是则返回继续随机点击
     def random_click(self, how1, element1, click_type='click', how2=0, element2=0, fail_pic=True):
-        global random_result
+        # global random_result
         # 翻页并且随机选取元素
         random_event = self.elements(how1, element1)
         random_click_time_nm = 0
@@ -263,9 +262,6 @@ class BaseFunction(object):
                     # 以防第一个显示不全所以从1开始
                     event_random = self.elements(how1, element1)
                     time.sleep(0.5)
-                    # if len(event_random) is 1:
-                    #     event_random[0].click()
-                    # else:
                     event_random[random.choice(range(len(event_random)))].click()
                 else:
                     # 长按元素
@@ -304,17 +300,16 @@ class BaseFunction(object):
                 except:
                     random_click_time_nm += 1
                     self.driver.back()
-                    if time_no == 20:
+                    if random_click_time_nm == 20:
                         random_result = False
         return random_result
 
     # 随机点一个元素并获取其name属性
     def random_click_get_name(self, how, element):
         events = self.elements(how, element)
-        no = random.choice(range(len(events)))
-        time.sleep(1)
-        name = events[no].get_attribute('name')
-        events[no].click()
+        event = random.choice(events)
+        name = event.get_attribute('name')
+        event.click()
         return name
 
     # 随机点击元素并获取同级元素的name属性
@@ -322,16 +317,13 @@ class BaseFunction(object):
         events1 = self.elements(how1, element1)
         events2 = self.elements(how2, element2)
         no = random.choice(range(len(events1)))
-        time.sleep(1)
+        time.sleep(0.5)
         name = events2[no].get_attribute('name')
         events1[no].click()
         return name
 
     # 逐个元素点击根据进入后的一个元素的Name属性判断是不想要点击的元素（滑动的高度是点击原始的高,能够匹配多个是否想要的名称）
     def reach_click(self, how1, element1, how2, element2, decide_name, *args):
-        global time_no
-        global event_check
-        global reach_result
         events = self.elements(how1, element1)
         # 获取屏幕分辨率
         size = self.driver.get_window_size()
@@ -370,9 +362,6 @@ class BaseFunction(object):
 
     # 寻找元素点击
     def reach_element_click(self, v_y, how2, element2, no=50, fail_pic=True):
-        global time_no
-        global event_check
-        global reach_result
         # 获取屏幕分辨率
         size = self.driver.get_window_size()
         width = size['width']
@@ -385,14 +374,11 @@ class BaseFunction(object):
                               width / 2, height * 3 / 4 - v_y)
             time.sleep(1)
             if time_no > no:
-                self.existence(how2, element2, fail_pic=fail_pic) is False
-                break
+                if self.existence(how2, element2, fail_pic=fail_pic):
+                    pass
+                else:
+                    break
             try:
-                # element = self.elements(how2, element2)
-                # if len(element) >2:
-                #     element[0].click()
-                # else:
-                #     continue
                 self.click(how2, element2, fail_pic)
                 break
             except:
@@ -400,9 +386,6 @@ class BaseFunction(object):
 
     # 点击元素后查看是否为想要点击的
     def reach_click_element(self, how1, element1, how2, element2, no=10):
-        global time_no
-        global event_check
-        global reach_result
         events = self.elements(how1, element1)
         # 获取屏幕分辨率
         size = self.driver.get_window_size()
@@ -426,7 +409,6 @@ class BaseFunction(object):
                 time_no += 1
                 self.driver.back()
                 if time_no == no:
-                    reach_result = False
                     break
                 continue
 
@@ -448,7 +430,7 @@ class BaseFunction(object):
 
     # 根据元素的高度进行滑屏，发现对应的name,对其进行点击(或长按）
     def reach_find_name_to_click(self, how, element, name, reach_type='click', time=20):
-        global reach_result
+        reach_result = True
         reach_event = self.elements(how, element)
         v_y = reach_event[0].size["height"]
         size = self.driver.get_window_size()
@@ -488,7 +470,6 @@ class BaseFunction(object):
 
     # 滑动页面到下一个页面(tab),查看元素变化
     def swipe_page_left_right(self, how, element, direction='left', swip_type='different', fail_pic=True):
-        global time_no
         swipe_page_event = self.wait_element(how, element, fail_pic=fail_pic)
         # 获取屏幕分辨率
         size = self.driver.get_window_size()
@@ -520,7 +501,6 @@ class BaseFunction(object):
         swipe_existence_event = self.wait_element(how, element, fail_pic=fail_pic)
         # 获取屏幕分辨率
         swipe_existence = 'existence' + time.strftime('%H%M%S')
-        # print(swipe_existence)
         self.Extend.get_screenshot_by_element(swipe_existence_event).write_to_file(PATH + '/../temp',
                                                                                    swipe_existence)
         # 获取屏幕分辨率
@@ -539,11 +519,10 @@ class BaseFunction(object):
     # 结果为真错误截图
     def check_assertTrue(self, chenck_ture_result, msg):
         if chenck_ture_result is not True:
-            try:
-                os.path.exists(PATH + '/../fail_picture') == False
-                os.mkdir(PATH + '/../fail_picture')
-            except:
+            if os.path.exists(PATH + '/../fail_picture'):
                 pass
+            else:
+                os.mkdir(PATH + '/../fail_picture')
             # 设置时间格式
             localtime = time.strftime('%Y%m%d%H%M%S')
             print('结果错误截图为:', localtime)
@@ -554,11 +533,10 @@ class BaseFunction(object):
     # 结果为假错误截图
     def check_assertFalse(self, chenck_false_result, msg):
         if chenck_false_result is not False:
-            try:
-                os.path.exists(PATH + '/../fail_picture') == False
-                os.mkdir(PATH + '/../fail_picture')
-            except:
+            if os.path.exists(PATH + '/../fail_picture'):
                 pass
+            else:
+                os.mkdir(PATH + '/../fail_picture')
             # 设置时间格式
             ISOTIMEFORMAT = '%Y%m%d_%X'
             localtime = str(time.strftime(ISOTIMEFORMAT, time.localtime())).replace(':', '')
@@ -571,18 +549,17 @@ class BaseFunction(object):
     def element_picture(self, how, element, name='element', fail_pic=True):
         picture_event = self.wait_element(how, element, fail_pic=fail_pic)
         name_p = name + time.strftime('%Y%m%d%H%M%S')
-        try:
-            os.path.exists(PATH + '/../temp') == False
-            os.mkdir(PATH + '/../temp')
-        except:
+        if os.path.exists(PATH + '/../temp'):
             pass
+        else:
+            os.mkdir(PATH + '/../temp')
         self.Extend.get_screenshot_by_element(picture_event).write_to_file(PATH + '/../temp', name_p)
         loadname = PATH + '/../temp/' + name_p + '.png'
         load = self.Extend.load_image(loadname)
         return load
 
     # 获取当前元素与指定元素截图进行图片对比
-    def cintrast_element_picture(self, how, element, load, fail_pic=True):
+    def contrast_element_picture(self, how, element, load, fail_pic=True):
         # 元素检查和截图存放位置
         global result
         cintrast_event = self.wait_element(how, element, fail_pic=fail_pic)
@@ -592,7 +569,7 @@ class BaseFunction(object):
         return result
 
     # 获取元素的位置返回值可控
-    def element_loaction(self, how, element, location_type='all'):
+    def element_location(self, how, element, location_type='all'):
         location_element = self.check_find_element(how, element)
         location = location_element.location
         if location_type is 'x':
@@ -605,7 +582,7 @@ class BaseFunction(object):
 
     # 通过坐标点击元素（不得已）
     def location_click(self, how, element):
-        location = self.element_loaction(how, element)
+        location = self.element_location(how, element)
         self.driver.tap([(location['x'], location['y'])])
 
     # 获取元素尺寸
@@ -621,7 +598,7 @@ class BaseFunction(object):
         return size
 
     # 输入法选择
-    def keyboard_select(self, IME, device_config='none'):
+    def select_keyboard(self, IME, device_config='none'):
         if device_config is 'none':
             os.system('adb shell ime enable %s' % IME)
             os.system('adb shell ime set %s' % IME)
@@ -631,7 +608,7 @@ class BaseFunction(object):
         time.sleep(2)
 
     # adb输入
-    def adb_input(self, text, device_config="none"):
+    def adb_commend(self, text, device_config="none"):
         if device_config is 'none':
             os.system('adb shell input text %s' % text)
         else:
@@ -652,7 +629,7 @@ class BaseFunction(object):
     # 键盘条件准备
     def keyboard_get_ready(self, IME, how, elenment, device_config='none'):
         # 切换输入法
-        self.keyboard_select(IME, device_config)
+        self.select_keyboard(IME, device_config)
         time.sleep(4)
         # 获取键盘的最上方高度
         a = self.check_find_element(how, elenment)
@@ -663,7 +640,7 @@ class BaseFunction(object):
         return top_y
 
     # pid获取
-    def get_pid(self, appname, device='none'):
+    def get_app_pid(self, appname, device='none'):
         if device == 'none':
             pid = os.popen("adb shell ps | grep " + appname).read().split()[1]
         else:
@@ -684,11 +661,10 @@ class BaseFunction(object):
     def checkpoint_pic(self, how, element, name, fail_pic=True):
         picture_event = self.wait_element(how, element, fail_pic=fail_pic)
         name_p = name + time.strftime('%Y%m%d%H%M%S')
-        try:
-            os.path.exists('%s/checkpoint_record_data' % PATH) == False
-            os.mkdir('%s/checkpoint_record_data' % PATH)
-        except:
+        if os.path.exists('%s/checkpoint_record_data' % PATH):
             pass
+        else:
+            os.mkdir('%s/checkpoint_record_data' % PATH)
         self.Extend.get_screenshot_by_element(picture_event).write_to_file('%s/checkpoint_record_data' % PATH, name_p)
         return 'keyboard_regression/checkpoint_record_data/' + name_p + '.png'
 
@@ -722,11 +698,11 @@ class BaseFunction(object):
             os.system('adb -s %s shell am start -n %s' % (device_config, activity))
         time.sleep(2)
 
-    def adb_install(self, PATH, device_config="none"):
+    def adb_install(self, APP_PATH, device_config="none"):
         if device_config is 'none':
-            os.system('adb install -r  %s' % PATH)
+            os.system('adb install -r  %s' % APP_PATH)
         else:
-            os.system('adb -s %s install -r %s' % (device_config, PATH))
+            os.system('adb -s %s install -r %s' % (device_config, APP_PATH))
 
 
 if __name__ == '__main__':

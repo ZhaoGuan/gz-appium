@@ -9,7 +9,6 @@ os.chdir(PATH + '/Report')
 
 
 def report_reader():
-    # with daemon.DaemonContext():
     os.popen('python3 -m http.server 8000')
 
 

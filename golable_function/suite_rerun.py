@@ -11,12 +11,10 @@ class Suit(unittest.TestSuite):
         topLevel = False
         if getattr(result, '_testRunEntered', False) is False:
             result._testRunEntered = topLevel = True
-
         for test in self:
             case_num = 1
             if result.shouldStop:
                 break
-
             success_flag = True
             while success_flag:
                 if _isnotsuite(test):
@@ -34,7 +32,6 @@ class Suit(unittest.TestSuite):
                             print('类%s第%s次重新初始化执行' % (test.__class__, class_num))
                             class_num += 1
                         continue
-
                 if not debug:
                     test(result)
                 else:
@@ -48,7 +45,6 @@ class Suit(unittest.TestSuite):
                         case_num += 1
                 else:
                     success_flag = False
-
         if topLevel:
             self._tearDownPreviousClass(None, result)
             self._handleModuleTearDown(result)

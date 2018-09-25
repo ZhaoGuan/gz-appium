@@ -9,6 +9,7 @@ import sys
 PATH = os.path.dirname(os.path.abspath(__file__))
 print(PATH)
 
+
 # from ElementCheck.ElementCheck import ElementCheck
 def get_app_location():
     apps = {}
@@ -38,16 +39,14 @@ def get_app_location():
 def report(r_name):
     global date_dir, name
     date = time.strftime('%Y%m%d', time.localtime())
-    try:
-        os.path.exists(PATH + '/../Report') is False
+    if os.path.exists(PATH + '/../Report'):
+        pass
+    else:
         os.mkdir(PATH + '/../Report')
-    except:
+    if os.path.exists(PATH + '/../Report/report_%s' % date):
         pass
-    try:
-        os.path.exists(PATH + '/../Report/report_%s' % date) is False
+    else:
         os.mkdir(PATH + '/../Report/report_%s' % date)
-    except:
-        pass
     i = 1
     while True:
         if os.path.exists(PATH + '/../Report/report_%s/%s%s.html' % (date, r_name, i)) is True:
