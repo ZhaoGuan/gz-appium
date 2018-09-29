@@ -5,12 +5,10 @@ import time
 import os
 import sys
 
-# PATH = sys.path
 PATH = os.path.dirname(os.path.abspath(__file__))
 print(PATH)
 
 
-# from ElementCheck.ElementCheck import ElementCheck
 def get_app_location():
     apps = {}
     # 注释部分是根据文件的创建时间筛选
@@ -39,13 +37,9 @@ def get_app_location():
 def report(r_name):
     global date_dir, name
     date = time.strftime('%Y%m%d', time.localtime())
-    if os.path.exists(PATH + '/../Report'):
-        pass
-    else:
+    if os.path.exists(PATH + '/../Report') is False:
         os.mkdir(PATH + '/../Report')
-    if os.path.exists(PATH + '/../Report/report_%s' % date):
-        pass
-    else:
+    if os.path.exists(PATH + '/../Report/report_%s' % date) is False:
         os.mkdir(PATH + '/../Report/report_%s' % date)
     i = 1
     while True:
@@ -58,14 +52,14 @@ def report(r_name):
     return name
 
 
-def Yaml_reader(Yaml_file):
-    yf = open(Yaml_file)
+def Yaml_reader(yamlfile):
+    yf = open(yamlfile)
     yx = yaml.load(yf)
     return yx
 
 
-def TestCase_runner(Yaml_file, self):
-    case = Yaml_reader(Yaml_file)
+def TestCase_runner(yamlfile, self):
+    case = Yaml_reader(yamlfile)
     action_number = len(case)
     value = {}
     for i in range(action_number):
@@ -168,6 +162,4 @@ def SelectFunction(function, self, action):
 
 
 if __name__ == '__main__':
-    # get_app_location()
-    # print(PATH + '/../Report')
     print(PATH)

@@ -439,7 +439,6 @@ class Ikey_Function:
         self.BF.click('name', 'Theme')
         self.BF.click('id', 'com.emoji.ikeyboard:id/fab')
         time.sleep(2)
-        no = i
         if i > 7:
             self.driver.swipe(start_x=self.driver.get_window_size()['width'] / 2,
                               start_y=self.driver.get_window_size()['height'] * 3 / 4,
@@ -576,7 +575,6 @@ class Ikey_Function:
         self.driver.swipe(start_x=phone['width'] / 2, start_y=y + 10, end_x=0, end_y=y + 10)
         self.BF.click('name', 'Font')
         self.BF.click('id', 'com.emoji.ikeyboard:id/fab')
-        no = i
         print(len(self.BF.elements('id', 'com.emoji.ikeyboard:id/text_font_preview')))
         self.BF.click('ides', 'com.emoji.ikeyboard:id/text_font_preview[%s]' % i)
         self.driver.tap([(200, 200)])

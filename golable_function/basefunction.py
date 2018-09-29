@@ -78,9 +78,6 @@ class BaseFunction(object):
 
     # 等待元素超过多久报错,默认10S
     def wait_element(self, how, element, wait_time=10, fail_pic=True):
-        # global wait_validate
-        # global wait_element
-        # global deadline
         wait_element = None
         dead_line = 0
         while True:
@@ -108,8 +105,6 @@ class BaseFunction(object):
 
     # 检查是否存在某元素
     def existence(self, how, element, wait=2, fail_pic=True):
-        # global existence_result
-        # global existence_event
         time.sleep(wait)
         try:
             self.check_find_element(how, element)
@@ -122,9 +117,6 @@ class BaseFunction(object):
 
     # 等待一类元素超过多久报错,默认5S
     def elements(self, how, element, element_time_waite=5, fail_pic=True):
-        # global elements_validate
-        # global elements_element
-        # global deadline
         deadline = 0
         while True:
             if how == 'id':
@@ -160,7 +152,6 @@ class BaseFunction(object):
         event_click.click()
 
     def click_jump(self, how1, element1, how2="0", element2="0", fail_pic=True):
-        # global jump_validate
         jump_validate = True
         # 点击元素1
         event1 = self.wait_element(how1, element1, fail_pic=fail_pic)
@@ -213,12 +204,9 @@ class BaseFunction(object):
 
     # 获取一个元素的name属性
     def attribute_name(self, how, element, same_thing='none', fail_pic=True):
-        # global attribute_result
         attribute_event = self.wait_element(how, element, fail_pic=fail_pic)
         attribute_result = attribute_event.get_attribute('name')
-        if same_thing == 'none':
-            pass
-        else:
+        if same_thing != 'none':
             if same_thing == attribute_result:
                 attribute_result = True
             else:
@@ -346,8 +334,6 @@ class BaseFunction(object):
                     assert event_check_name in args
                 else:
                     print('not same')
-                    # for i in args:
-                    #     assert event_check_name != i
                     assert event_check_name not in args
                 reach_result = True
                 break
@@ -373,11 +359,8 @@ class BaseFunction(object):
             self.driver.swipe(width / 2, height * 3 / 4,
                               width / 2, height * 3 / 4 - v_y)
             time.sleep(1)
-            if time_no > no:
-                if self.existence(how2, element2, fail_pic=fail_pic):
-                    pass
-                else:
-                    break
+            if (time_no > no) and (self.existence(how2, element2, fail_pic=fail_pic) == False):
+                break
             try:
                 self.click(how2, element2, fail_pic)
                 break
@@ -519,9 +502,7 @@ class BaseFunction(object):
     # 结果为真错误截图
     def check_assertTrue(self, chenck_ture_result, msg):
         if chenck_ture_result is not True:
-            if os.path.exists(PATH + '/../fail_picture'):
-                pass
-            else:
+            if os.path.exists(PATH + '/../fail_picture') is False:
                 os.mkdir(PATH + '/../fail_picture')
             # 设置时间格式
             localtime = time.strftime('%Y%m%d%H%M%S')
@@ -533,9 +514,7 @@ class BaseFunction(object):
     # 结果为假错误截图
     def check_assertFalse(self, chenck_false_result, msg):
         if chenck_false_result is not False:
-            if os.path.exists(PATH + '/../fail_picture'):
-                pass
-            else:
+            if os.path.exists(PATH + '/../fail_picture') is False:
                 os.mkdir(PATH + '/../fail_picture')
             # 设置时间格式
             ISOTIMEFORMAT = '%Y%m%d_%X'
@@ -549,9 +528,7 @@ class BaseFunction(object):
     def element_picture(self, how, element, name='element', fail_pic=True):
         picture_event = self.wait_element(how, element, fail_pic=fail_pic)
         name_p = name + time.strftime('%Y%m%d%H%M%S')
-        if os.path.exists(PATH + '/../temp'):
-            pass
-        else:
+        if os.path.exists(PATH + '/../temp') is False:
             os.mkdir(PATH + '/../temp')
         self.Extend.get_screenshot_by_element(picture_event).write_to_file(PATH + '/../temp', name_p)
         loadname = PATH + '/../temp/' + name_p + '.png'
@@ -573,12 +550,11 @@ class BaseFunction(object):
         location_element = self.check_find_element(how, element)
         location = location_element.location
         if location_type is 'x':
-            location = location['x']
+            return location['x']
         elif location_type is 'y':
-            location = location['y']
+            return location['y']
         else:
-            pass
-        return location
+            return location
 
     # 通过坐标点击元素（不得已）
     def location_click(self, how, element):
@@ -590,12 +566,11 @@ class BaseFunction(object):
         size_element = self.check_find_element(how, element)
         size = size_element.size
         if size is '"width"':
-            size = size['"width"']
+            return size['"width"']
         elif size_type is 'height':
-            size = size['height']
+            return size['height']
         else:
-            pass
-        return size
+            return size
 
     # 输入法选择
     def select_keyboard(self, IME, device_config='none'):
@@ -661,9 +636,7 @@ class BaseFunction(object):
     def checkpoint_pic(self, how, element, name, fail_pic=True):
         picture_event = self.wait_element(how, element, fail_pic=fail_pic)
         name_p = name + time.strftime('%Y%m%d%H%M%S')
-        if os.path.exists('%s/checkpoint_record_data' % PATH):
-            pass
-        else:
+        if os.path.exists('%s/checkpoint_record_data' % PATH) == False:
             os.mkdir('%s/checkpoint_record_data' % PATH)
         self.Extend.get_screenshot_by_element(picture_event).write_to_file('%s/checkpoint_record_data' % PATH, name_p)
         return 'keyboard_regression/checkpoint_record_data/' + name_p + '.png'

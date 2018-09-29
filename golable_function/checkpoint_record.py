@@ -66,7 +66,6 @@ def query_the_fist(table_name):
     c = conn.cursor()
     no = c.execute('SELECT max(id) FROM %s' % table_name).fetchone()[0]
     print(type(no))
-    # no = no.fetchone()[0]
     if no == None:
         return False
     else:
