@@ -8,8 +8,8 @@ import time
 PATH = os.path.dirname(os.path.abspath(__file__))
 
 
-def configer_reader(Yaml_file):
-    yf = open(Yaml_file)
+def configer_reader(yaml_file):
+    yf = open(yaml_file)
     yx = yaml.load(yf)
     yf.close()
     return yx

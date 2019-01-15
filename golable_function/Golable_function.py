@@ -1,5 +1,5 @@
-# coding=utf-8
-# __author__ = 'yuelian'
+# -*- coding: utf-8 -*-
+# __author__ = 'Gz'
 import yaml
 import time
 import os
@@ -35,7 +35,7 @@ def get_app_location():
 
 
 def report(r_name):
-    global date_dir, name
+    global name
     date = time.strftime('%Y%m%d', time.localtime())
     if os.path.exists(PATH + '/../Report') is False:
         os.mkdir(PATH + '/../Report')
@@ -52,34 +52,34 @@ def report(r_name):
     return name
 
 
-def Yaml_reader(yamlfile):
-    yf = open(yamlfile)
+def yaml_reader(yaml_file):
+    yf = open(yaml_file)
     yx = yaml.load(yf)
     return yx
 
 
-def TestCase_runner(yamlfile, self):
-    case = Yaml_reader(yamlfile)
+def case_event_runner(yaml_file, self):
+    case = yaml_reader(yaml_file)
     action_number = len(case)
     value = {}
     for i in range(action_number):
         action = case[i]
         print(action["action"])
         if action["type"] == "Null":
-            SelectFunction(action["function"], self, action)
-        if action["type"] == "Ture":
+            select_function(action["function"], self, action)
+        if action["type"] is True:
             self.ElementCheck.check_assert_true(
-                SelectFunction(action["function"], self, action),
+                select_function(action["function"], self, action),
                 action["msg"])
-        if action["type"] == "False":
+        if action["type"] is False:
             self.ElementCheck.check_assert_false(
-                SelectFunction(action["function"], self, action),
+                select_function(action["function"], self, action),
                 action["msg"])
         if action["type"] == "Value":
-            value[action["value"]] = SelectFunction(action["function"], self, action)
+            value[action["value"]] = select_function(action["function"], self, action)
 
 
-def SelectFunction(function, self, action):
+def select_function(function, self, action):
     functions = {
         # basics function方法
         "result_picture": lambda: self.ElementCheck.result_picture(action["result_name"]),
@@ -135,28 +135,7 @@ def SelectFunction(function, self, action):
         "element_loaction": lambda: self.ElementCheck.element_loaction(action["element1_location"],
                                                                        action["element1_value"], location_type='all'),
         "element_size": lambda: self.ElementCheck.element_size(action["element1_location"], action["element1_value"]),
-        # bugua function方法
-        "share_picture_QQ": lambda: self.bugua.share_picture_QQ(),
-        "share_picture_kongjian": lambda: self.bugua.share_picture_kongjian(),
-        "share_picture_weixin": lambda: self.bugua.share_picture_weixin(),
-        "share_picture_pengyouquan": lambda: self.bugua.share_picture_pengyouquan(),
-        "share_picture_renren": lambda: self.bugua.share_picture_renren(),
-        "share_picture_momo": lambda: self.bugua.share_picture_momo(),
-        "share_package_QQ": lambda: self.bugua.share_package_QQ(),
-        "share_package_kongjian": lambda: self.bugua.share_package_kongjian(),
-        "share_package_weixin": lambda: self.bugua.share_package_weixin(),
-        "share_package_pengyouquan": lambda: self.bugua.share_package_pengyouquan(),
-        "share_package_renren": lambda: self.bugua.share_package_renren(),
-        "special_effects_inside_app": lambda: self.bugua.special_effects_inside_app(),
-        "gif_effects_inside_app": lambda: self.bugua.gif_effects_inside_app(),
-        "open_suspension": lambda: self.bugua.open_suspension(),
-        "suspension_click_": lambda: self.bugua.suspension_click_(),
-        "suspension_Special_effects": lambda: self.bugua.suspension_Special_effects(),
-        "suspension_gif": lambda: self.bugua.suspension_gif(),
-        "random_post_title_click": lambda: self.bugua.random_post_title_click(),
-        "click_post": lambda: self.bugua.click_post(),
-        "zb_input": lambda: self.bugua.zb_input(),
-        "statistics": lambda: self.statistics()
+
     }
     return functions[function]()
 

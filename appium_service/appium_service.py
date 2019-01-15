@@ -71,7 +71,7 @@ class AppiumService:
                 bp += 1
             else:
                 break
-        cmd = 'appium --session-override -a {} -p {} -bp {}--session-override --no-reset '.format(self.server_ip, p, bp)
+        cmd = 'appium --session-override -a {} -p {} -bp {} --session-override --no-reset '.format(self.server_ip, p, bp)
         process = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         pid = process.pid
         time.sleep(wait_time)

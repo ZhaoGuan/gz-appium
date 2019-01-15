@@ -35,18 +35,18 @@ def create_table(table_name):
         print(e)
 
 
-def insert_table(table_name, view_date, date, pic, Initial_pic, last_pic):
+def insert_table(table_name, view_date, date, pic, initial_pic, last_pic):
     conn = sqlite3.connect(PATH + '/../checkpoint_record_data/checkpoint_record_data.db')
     print("Opened database successfully")
     instert_c = conn.cursor()
     instert_c.execute(
         "INSERT INTO %s (view_date, date , pic,Initial_pic_comparison,last_pic_comparison) VALUES (?,?,?,?,?)" %
-        table_name, (view_date, date, pic, Initial_pic, last_pic))
+        table_name, (view_date, date, pic, initial_pic, last_pic))
     conn.commit()
     conn.close()
 
 
-def query_Initial_last(table_name):
+def query_initial_last(table_name):
     conn = sqlite3.connect(PATH + '/../checkpoint_record_data/checkpoint_record_data.db' )
     print("Opened database successfully")
     c = conn.cursor()

@@ -16,7 +16,7 @@ PATH = lambda p: os.path.abspath(p)
 TEMP_FILE = PATH(tempfile.gettempdir() + "/temp_screen.png")
 
 
-class Appium_Extend(object):
+class AppiumExtend(object):
     def __init__(self, driver):
         self.driver = driver
 
@@ -31,8 +31,8 @@ class Appium_Extend(object):
 
         # 截取图片
         image = Image.open(TEMP_FILE)
-        newImage = image.crop(box)
-        newImage.save(TEMP_FILE)
+        new_image = image.crop(box)
+        new_image.save(TEMP_FILE)
 
         return self
 
@@ -42,16 +42,16 @@ class Appium_Extend(object):
         box = (start_x, start_y, end_x, end_y)
 
         image = Image.open(TEMP_FILE)
-        newImage = image.crop(box)
-        newImage.save(TEMP_FILE)
+        new_image = image.crop(box)
+        new_image.save(TEMP_FILE)
 
         return self
 
-    def write_to_file(self, dirPath, imageName, form="png"):
+    def write_to_file(self, dir_path, image_name, form="png"):
         # 将截屏文件复制到指定目录下
-        if not os.path.isdir(dirPath):
-            os.makedirs(dirPath)
-        shutil.copyfile(TEMP_FILE, PATH(dirPath + "/" + imageName + "." + form))
+        if not os.path.isdir(dir_path):
+            os.makedirs(dir_path)
+        shutil.copyfile(TEMP_FILE, PATH(dir_path + "/" + image_name + "." + form))
 
     def write_to_base64(self):
         with open(TEMP_FILE, 'rb') as image:
@@ -95,8 +95,8 @@ class Appium_Extend(object):
 
         # 截取图片
         image = Image.open(TEMP_FILE)
-        newImage = image.crop(box)
-        newImage.save(TEMP_FILE)
+        new_image = image.crop(box)
+        new_image.save(TEMP_FILE)
 
         return self
 

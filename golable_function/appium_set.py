@@ -1,6 +1,3 @@
-# coding=utf-8
-# __author__ = 'yuelian'
-
 import os
 
 begin_p = '4711'
@@ -29,11 +26,6 @@ class AppiumConfig(object):
             config = {}
             for i in range(len(__udid)):
                 if i > 0:
-                    # win
-                    # appium_server.append({"ip": "127.0.0." + str(i + 1), "p": "471" + str(i + 1), "bp": "472" + str(i + 1),
-                    #                       "udid": "%s" % __udid[i]})
-                    # appium_config.append(["127.0.0." + str(i + 1), "471" + str(i + 1), "472" + str(i + 1)])
-                    # MAC
                     appium_server.append({"ip": "127.0.0.1", "p": p + str(i + 1), "bp": bp + str(i + 1),
                                           "udid": "%s" % __udid[i]})
                     appium_config.append(["127.0.0.1", p + str(i + 1), bp + str(i + 1)])
