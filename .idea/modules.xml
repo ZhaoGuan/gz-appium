@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/gz-appium.iml" filepath="$PROJECT_DIR$/.idea/gz-appium.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/gz-appium.iml" filepath="$PROJECT_DIR$/.idea/gz-appium.iml" />
     </modules>
   </component>
 </project>
