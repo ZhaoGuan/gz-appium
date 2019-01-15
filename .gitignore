@@ -1,6 +1,7 @@
 #gz
 #config/salt.yml
 # Byte-compiled / optimized / DLL files
+*.png
 __pycache__/
 *.py[cod]
 *$py.class
